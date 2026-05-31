@@ -15,6 +15,11 @@ export default function Home() {
   const [selectedAvatar, setSelectedAvatar] = useState('🐝');
   const [studentError, setStudentError] = useState('');
   const [studentLoading, setStudentLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Teacher / Host States
   const [teacherError, setTeacherError] = useState('');
@@ -224,6 +229,15 @@ export default function Home() {
                   </>
                 )}
               </button>
+              {mounted ? (
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent-green)', textAlign: 'center', marginTop: '0.5rem', opacity: 0.8 }}>
+                  ● הכוורת פעילה (v1.0.3)
+                </div>
+              ) : (
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent-pink)', textAlign: 'center', marginTop: '0.5rem', opacity: 0.8 }} className="animate-pulse-glow">
+                  טוען חיבור לקליינט...
+                </div>
+              )}
             </div>
           </section>
 
