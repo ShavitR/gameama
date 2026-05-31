@@ -67,11 +67,17 @@ export default function Home() {
         setStudentError(data.error || 'שגיאה בחיבור לחדר');
         setStudentLoading(false);
       } else {
-        // Save credentials to localStorage
-        localStorage.setItem(`hivemind_player_${trimmedRoom}`, data.playerId);
-        localStorage.setItem(`hivemind_nick_${trimmedRoom}`, trimmedNick);
-        localStorage.setItem(`hivemind_avatar_${trimmedRoom}`, selectedAvatar);
-        router.push(`/player/${trimmedRoom}`);
+        // Save credentials to localStorage (safely wrapped)
+        try {
+          localStorage.setItem(`hivemind_player_${trimmedRoom}`, data.playerId);
+          localStorage.setItem(`hivemind_nick_${trimmedRoom}`, trimmedNick);
+          localStorage.setItem(`hivemind_avatar_${trimmedRoom}`, selectedAvatar);
+        } catch (storageErr) {
+          console.warn('LocalStorage is blocked or disabled:', storageErr);
+        }
+        
+        // Pass credentials in the query params to ensure it works even if localStorage fails
+        router.push(`/player/${trimmedRoom}?playerId=${data.playerId}&nick=${encodeURIComponent(trimmedNick)}&avatar=${encodeURIComponent(selectedAvatar)}`);
       }
     } catch (err) {
       setStudentError('שגיאת רשת. בדקו את החיבור לאינטרנט.');

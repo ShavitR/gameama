@@ -44,23 +44,53 @@ export default function PlayerScreen() {
   // To avoid reloading loop issues
   const initialized = useRef(false);
 
-  // 1. Retrieve playerId, nickname, and avatar from localStorage
+  // 1. Retrieve playerId, nickname, and avatar from query parameters OR localStorage
   useEffect(() => {
-    if (!roomId || roomId === '[roomId]' || roomId.startsWith('[')) return;
+    const cleanRoomId = roomId ? roomId.trim() : '';
+    // Room ID must be a 4-digit number. Avoid checking when it's a dynamic path placeholder (e.g. [roomId], %5BroomId%5D)
+    if (!cleanRoomId || cleanRoomId.length !== 4 || isNaN(Number(cleanRoomId))) {
+      return;
+    }
     if (initialized.current) return;
     initialized.current = true;
 
-    const storedPlayerId = localStorage.getItem(`hivemind_player_${roomId}`);
-    const storedNick = localStorage.getItem(`hivemind_nick_${roomId}`);
-    const storedAvatar = localStorage.getItem(`hivemind_avatar_${roomId}`);
+    // Check query parameters first
+    const searchParams = new URLSearchParams(window.location.search);
+    const urlPlayerId = searchParams.get('playerId');
+    const urlNick = searchParams.get('nick');
+    const urlAvatar = searchParams.get('avatar');
 
-    if (!storedPlayerId || !storedNick) {
+    let finalPlayerId = urlPlayerId;
+    let finalNick = urlNick;
+    let finalAvatar = urlAvatar;
+
+    // Fallback to localStorage
+    try {
+      if (!finalPlayerId) finalPlayerId = localStorage.getItem(`hivemind_player_${cleanRoomId}`);
+      if (!finalNick) finalNick = localStorage.getItem(`hivemind_nick_${cleanRoomId}`);
+      if (!finalAvatar) finalAvatar = localStorage.getItem(`hivemind_avatar_${cleanRoomId}`);
+    } catch (storageErr) {
+      console.warn('Failed to read from localStorage:', storageErr);
+    }
+
+    if (!finalPlayerId || !finalNick) {
       router.replace('/');
     } else {
-      setPlayerId(storedPlayerId);
-      setNickname(storedNick);
-      if (storedAvatar) {
-        setAvatar(storedAvatar);
+      // Sync back to localStorage if loaded from URL, so refresh works even without query parameters
+      try {
+        localStorage.setItem(`hivemind_player_${cleanRoomId}`, finalPlayerId);
+        localStorage.setItem(`hivemind_nick_${cleanRoomId}`, finalNick);
+        if (finalAvatar) {
+          localStorage.setItem(`hivemind_avatar_${cleanRoomId}`, finalAvatar);
+        }
+      } catch (storageErr) {
+        console.warn('Failed to write to localStorage:', storageErr);
+      }
+
+      setPlayerId(finalPlayerId);
+      setNickname(finalNick);
+      if (finalAvatar) {
+        setAvatar(finalAvatar);
       }
     }
     setMuted(sounds.isMuted);
