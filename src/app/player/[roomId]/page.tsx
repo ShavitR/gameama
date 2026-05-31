@@ -307,7 +307,7 @@ export default function PlayerScreen() {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmitAnswer} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} suppressHydrationWarning>
+            <form onSubmit={handleSubmitAnswer} action="javascript:void(0);" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} suppressHydrationWarning>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, fontSize: '0.95rem' }}>הניחוש שלכם (מה הרוב יגידו?):</label>
                 <input
@@ -323,7 +323,15 @@ export default function PlayerScreen() {
                 />
               </div>
 
-              <button type="submit" className="btn-accent" disabled={submitting || !answerInput.trim()} style={{ width: '100%' }}>
+              <button 
+                type="submit" 
+                className="btn-accent" 
+                style={{ 
+                  width: '100%',
+                  opacity: (submitting || !answerInput.trim()) ? 0.6 : 1,
+                  pointerEvents: (submitting || !answerInput.trim()) ? 'none' : 'auto'
+                }}
+              >
                 {submitting ? 'שולח...' : (
                   <>
                     <Send size={18} style={{ transform: 'rotate(180deg)' }} />

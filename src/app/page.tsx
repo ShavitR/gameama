@@ -34,6 +34,7 @@ export default function Home() {
   // Join as Student
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (studentLoading) return;
     setStudentError('');
 
     const trimmedRoom = roomId.trim();
@@ -136,7 +137,7 @@ export default function Home() {
               הקלידו את קוד החדר שמופיע על הלוח בכיתה, בחרו דמות מגניבה לכוורת, והזינו את הכינוי שלכם!
             </p>
 
-            <form onSubmit={handleJoin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} suppressHydrationWarning>
+            <form onSubmit={handleJoin} action="javascript:void(0);" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} suppressHydrationWarning>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-light)' }}>קוד חדר (4 ספרות)</label>
                 <input
@@ -197,7 +198,16 @@ export default function Home() {
                 </div>
               )}
 
-              <button type="submit" className="btn-accent" disabled={studentLoading} style={{ width: '100%', padding: '1.1rem' }}>
+              <button 
+                type="submit" 
+                className="btn-accent" 
+                style={{ 
+                  width: '100%', 
+                  padding: '1.1rem',
+                  opacity: studentLoading ? 0.6 : 1,
+                  pointerEvents: studentLoading ? 'none' : 'auto'
+                }}
+              >
                 {studentLoading ? 'מתחבר לכוורת...' : (
                   <>
                     <LogIn size={20} />

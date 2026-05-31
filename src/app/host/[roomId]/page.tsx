@@ -610,7 +610,7 @@ export default function HostScreen() {
                 </div>
 
                 {/* Add new custom question form */}
-                <form onSubmit={handleAddQuestion} style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                <form onSubmit={handleAddQuestion} action="javascript:void(0);" style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                   <input
                     type="text"
                     placeholder="הוסיפו שאלה מותאמת אישית..."
@@ -619,7 +619,19 @@ export default function HostScreen() {
                     className="input-text"
                     style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', borderRadius: '10px', flex: 1, textAlign: 'right', height: 'auto' }}
                   />
-                  <button type="submit" className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', borderRadius: '10px', height: 'auto', boxShadow: 'none' }} disabled={!newQuestionText.trim()}>
+                  <button 
+                    type="submit" 
+                    className="btn-primary" 
+                    style={{ 
+                      padding: '0.5rem 1rem', 
+                      fontSize: '0.9rem', 
+                      borderRadius: '10px', 
+                      height: 'auto', 
+                      boxShadow: 'none',
+                      opacity: !newQuestionText.trim() ? 0.6 : 1,
+                      pointerEvents: !newQuestionText.trim() ? 'none' : 'auto'
+                    }}
+                  >
                     <Plus size={16} />
                     <span>הוסף</span>
                   </button>
