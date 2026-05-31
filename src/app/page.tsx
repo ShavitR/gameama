@@ -157,6 +157,7 @@ export default function Home() {
                 <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-light)' }}>קוד חדר (4 ספרות)</label>
                 <input
                   type="text"
+                  name="roomId"
                   maxLength={4}
                   placeholder="לדוגמה: 1234"
                   value={roomId}
@@ -164,7 +165,7 @@ export default function Home() {
                   onKeyDown={handleKeyDown}
                   className="input-text"
                   required
-                  autoComplete="off"
+                  autoComplete="one-time-code"
                   autoCorrect="off"
                   autoCapitalize="off"
                   spellCheck={false}
@@ -177,6 +178,7 @@ export default function Home() {
                 <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-light)' }}>הכינוי שלך</label>
                 <input
                   type="text"
+                  name="nickname"
                   maxLength={15}
                   placeholder="הכניסו שם מגניב..."
                   value={nickname}
@@ -184,7 +186,7 @@ export default function Home() {
                   onKeyDown={handleKeyDown}
                   className="input-text"
                   required
-                  autoComplete="off"
+                  autoComplete="nickname"
                   autoCorrect="off"
                   autoCapitalize="off"
                   spellCheck={false}

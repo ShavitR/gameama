@@ -328,6 +328,7 @@ export default function PlayerScreen() {
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, fontSize: '0.95rem' }}>הניחוש שלכם (מה הרוב יגידו?):</label>
                 <input
                   type="text"
+                  name="answer"
                   maxLength={50}
                   placeholder="כתבו תשובה קצרה וקולעת..."
                   value={answerInput}

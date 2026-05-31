@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "המוח הכוורתי - משחק פתיחת יום",
   description: "משחק פתיחת יום כיתתי מהיר וקצבי. נחשו מה רוב הכיתה חושבת וצברו נקודות!",
+  other: {
+    "google": "notranslate",
+  },
   formatDetection: {
     telephone: false,
     date: false,
@@ -18,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl" suppressHydrationWarning>
+    <html lang="he" dir="rtl" suppressHydrationWarning translate="no" className="notranslate">
       <body>
         <div className="honeycomb-overlay" />
         <div className="ambient-glow-1" />
