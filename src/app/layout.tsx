@@ -4,6 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "המוח הכוורתי - משחק פתיחת יום",
   description: "משחק פתיחת יום כיתתי מהיר וקצבי. נחשו מה רוב הכיתה חושבת וצברו נקודות!",
+  formatDetection: {
+    telephone: false,
+    date: false,
+    address: false,
+    email: false,
+  },
 };
 
 export default function RootLayout({

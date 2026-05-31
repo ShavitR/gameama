@@ -55,10 +55,20 @@ export default function PlayerScreen() {
     initialized.current = true;
 
     // Check query parameters first
-    const searchParams = new URLSearchParams(window.location.search);
-    const urlPlayerId = searchParams.get('playerId');
-    const urlNick = searchParams.get('nick');
-    const urlAvatar = searchParams.get('avatar');
+    let urlPlayerId = null;
+    let urlNick = null;
+    let urlAvatar = null;
+
+    try {
+      if (typeof window !== 'undefined' && window.location) {
+        const searchParams = new URLSearchParams(window.location.search || '');
+        urlPlayerId = searchParams.get('playerId');
+        urlNick = searchParams.get('nick');
+        urlAvatar = searchParams.get('avatar');
+      }
+    } catch (e) {
+      console.warn("Failed to parse URL query parameters on player page:", e);
+    }
 
     let finalPlayerId = urlPlayerId;
     let finalNick = urlNick;
@@ -326,6 +336,10 @@ export default function PlayerScreen() {
                   className="input-text"
                   autoFocus
                   required
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
                   suppressHydrationWarning
                 />
               </div>

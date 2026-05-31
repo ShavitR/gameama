@@ -27,12 +27,16 @@ export default function Home() {
 
   // Pre-fill Room ID from URL query parameters (e.g. from scanned QR code)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const searchParams = new URLSearchParams(window.location.search);
-      const queryRoomId = searchParams.get('roomId');
-      if (queryRoomId) {
-        setRoomId(queryRoomId);
+    try {
+      if (typeof window !== 'undefined' && window.location) {
+        const searchParams = new URLSearchParams(window.location.search || '');
+        const queryRoomId = searchParams.get('roomId');
+        if (queryRoomId) {
+          setRoomId(queryRoomId);
+        }
       }
+    } catch (e) {
+      console.warn("Failed to parse URL query parameters:", e);
     }
   }, []);
 
@@ -160,6 +164,11 @@ export default function Home() {
                   onKeyDown={handleKeyDown}
                   className="input-text"
                   required
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  inputMode="numeric"
                   suppressHydrationWarning
                 />
               </div>
@@ -175,6 +184,10 @@ export default function Home() {
                   onKeyDown={handleKeyDown}
                   className="input-text"
                   required
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
                   suppressHydrationWarning
                 />
               </div>
