@@ -124,9 +124,15 @@ export default function PlayerScreen() {
     return () => clearInterval(interval);
   }, [roomId, playerId]);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmitAnswer();
+    }
+  };
+
   // 3. Handle answer submission
-  const handleSubmitAnswer = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitAnswer = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!answerInput.trim() || submitting || !playerId) return;
 
     setSubmitting(true);
@@ -307,7 +313,7 @@ export default function PlayerScreen() {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmitAnswer} action="javascript:void(0);" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} suppressHydrationWarning>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} suppressHydrationWarning>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, fontSize: '0.95rem' }}>הניחוש שלכם (מה הרוב יגידו?):</label>
                 <input
@@ -316,6 +322,7 @@ export default function PlayerScreen() {
                   placeholder="כתבו תשובה קצרה וקולעת..."
                   value={answerInput}
                   onChange={(e) => setAnswerInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="input-text"
                   autoFocus
                   required
@@ -324,7 +331,8 @@ export default function PlayerScreen() {
               </div>
 
               <button 
-                type="submit" 
+                type="button" 
+                onClick={() => handleSubmitAnswer()}
                 className="btn-accent" 
                 style={{ 
                   width: '100%',
@@ -339,7 +347,7 @@ export default function PlayerScreen() {
                   </>
                 )}
               </button>
-            </form>
+            </div>
           )}
         </main>
       )}

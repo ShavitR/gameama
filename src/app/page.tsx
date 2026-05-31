@@ -31,9 +31,15 @@ export default function Home() {
     }
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleJoin();
+    }
+  };
+
   // Join as Student
-  const handleJoin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleJoin = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (studentLoading) return;
     setStudentError('');
 
@@ -137,7 +143,7 @@ export default function Home() {
               הקלידו את קוד החדר שמופיע על הלוח בכיתה, בחרו דמות מגניבה לכוורת, והזינו את הכינוי שלכם!
             </p>
 
-            <form onSubmit={handleJoin} action="javascript:void(0);" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} suppressHydrationWarning>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} suppressHydrationWarning>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-light)' }}>קוד חדר (4 ספרות)</label>
                 <input
@@ -146,6 +152,7 @@ export default function Home() {
                   placeholder="לדוגמה: 1234"
                   value={roomId}
                   onChange={(e) => setRoomId(e.target.value.replace(/\D/g, ''))}
+                  onKeyDown={handleKeyDown}
                   className="input-text"
                   required
                   suppressHydrationWarning
@@ -160,6 +167,7 @@ export default function Home() {
                   placeholder="הכניסו שם מגניב..."
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="input-text"
                   required
                   suppressHydrationWarning
@@ -199,7 +207,8 @@ export default function Home() {
               )}
 
               <button 
-                type="submit" 
+                type="button" 
+                onClick={() => handleJoin()}
                 className="btn-accent" 
                 style={{ 
                   width: '100%', 
@@ -215,7 +224,7 @@ export default function Home() {
                   </>
                 )}
               </button>
-            </form>
+            </div>
           </section>
 
           {/* Teacher Creation Panel */}
