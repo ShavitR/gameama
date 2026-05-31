@@ -108,16 +108,16 @@ export default function Home() {
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
       
       {/* Decorative Shifting Header */}
-      <header style={{ padding: '3.5rem 1rem 2rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <header className="brand-header">
         <div className="bee-emoji" style={{ fontSize: '5rem', marginBottom: '0.75rem', filter: 'drop-shadow(0 0 15px rgba(245,158,11,0.5))' }}>🐝</div>
-        <h1 className="brand-title" style={{ fontSize: '3.8rem', letterSpacing: '-1px' }}>המוח הכוורתי</h1>
+        <h1 className="brand-title">המוח הכוורתי</h1>
         <p className="brand-subtitle" style={{ fontSize: '1.25rem', maxWidth: '600px', margin: '0.75rem auto 0 auto', lineHeight: '1.5' }}>
           משחק פתיחת בוקר כיתתי קצבי ומשעשע. נחשו מה רוב הכיתה תענה על השאלות וצברו נקודות!
         </p>
       </header>
 
       <main className="container" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="grid-cols-2" style={{ width: '100%', maxWidth: '1050px', gap: '2.5rem' }}>
+        <div className="grid-cols-2" style={{ width: '100%', maxWidth: '1050px' }}>
           
           {/* Student Entrance Panel */}
           <section className="glass-panel glowing-yellow" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignSelf: 'start' }}>
@@ -161,15 +161,7 @@ export default function Home() {
 
               <div>
                 <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-light)' }}>בחרו דמות כוורת (אוואטר)</label>
-                <div style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(8, 1fr)', 
-                  gap: '0.5rem', 
-                  background: 'rgba(5, 3, 10, 0.3)', 
-                  padding: '0.75rem', 
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255,255,255,0.05)'
-                }}>
+                <div className="avatar-grid">
                   {AVATARS.map((emoji) => (
                     <button
                       key={emoji}

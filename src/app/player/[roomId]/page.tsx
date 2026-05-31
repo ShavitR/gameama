@@ -397,46 +397,48 @@ export default function PlayerScreen() {
       )}
 
       {/* Live Floating Reaction Bar */}
-      <div style={{
-        position: 'fixed',
-        bottom: '1rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        background: 'var(--panel-bg)',
-        border: '1px solid var(--panel-border)',
-        backdropFilter: 'blur(15px)',
-        padding: '0.5rem 1rem',
-        borderRadius: '30px',
-        display: 'flex',
-        gap: '0.6rem',
-        boxShadow: 'var(--shadow-md)',
-        zIndex: 100,
-        width: '90%',
-        maxWidth: '450px',
-        justifyContent: 'space-around',
-        direction: 'ltr' // Emojis ordered ltr
-      }}>
-        {REACTION_EMOJIS.map(emoji => (
-          <button
-            key={emoji}
-            onClick={() => sendReaction(emoji)}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '1.7rem',
-              cursor: 'pointer',
-              padding: '0.25rem',
-              transition: 'transform 0.15s ease',
-              outline: 'none',
-              userSelect: 'none',
-              WebkitUserSelect: 'none'
-            }}
-            className="reaction-btn"
-          >
-            {emoji}
-          </button>
-        ))}
-      </div>
+      {!(status.status === 'question' && !self?.hasAnswered) && (
+        <div style={{
+          position: 'fixed',
+          bottom: '1rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'var(--panel-bg)',
+          border: '1px solid var(--panel-border)',
+          backdropFilter: 'blur(15px)',
+          padding: '0.5rem 1rem',
+          borderRadius: '30px',
+          display: 'flex',
+          gap: '0.6rem',
+          boxShadow: 'var(--shadow-md)',
+          zIndex: 100,
+          width: '90%',
+          maxWidth: '450px',
+          justifyContent: 'space-around',
+          direction: 'ltr' // Emojis ordered ltr
+        }}>
+          {REACTION_EMOJIS.map(emoji => (
+            <button
+              key={emoji}
+              onClick={() => sendReaction(emoji)}
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: '1.7rem',
+                cursor: 'pointer',
+                padding: '0.25rem',
+                transition: 'transform 0.15s ease',
+                outline: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none'
+              }}
+              className="reaction-btn"
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+      )}
 
     </div>
   );
